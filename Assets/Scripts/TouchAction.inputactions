@@ -6,24 +6,64 @@
             "id": "361a7d71-415b-4605-9682-a7c8df742177",
             "actions": [
                 {
-                    "name": "Slice",
+                    "name": "TouchPosition",
                     "type": "Value",
                     "id": "5f3daca3-03a1-4e45-a31d-2c6b37fab5aa",
-                    "expectedControlType": "Touch",
+                    "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TouchPress",
+                    "type": "Button",
+                    "id": "d3b9b460-20f6-4807-8f04-e0f808a8a04e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TouchHold",
+                    "type": "Button",
+                    "id": "ef904a42-60f1-45da-94db-126cbd459798",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "bcd0ff25-54f2-4dc9-9457-41239f77fee4",
-                    "path": "<Touchscreen>/primaryTouch",
+                    "path": "<Touchscreen>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slice",
+                    "action": "TouchPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db38b223-580d-4e4f-8c80-12ec537f4935",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7bdf10fb-0431-4cb5-9b82-3d4e101bad8c",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
