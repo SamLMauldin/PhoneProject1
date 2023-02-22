@@ -34,7 +34,7 @@ public class TouchManager : MonoBehaviour
     {
         float value = context.ReadValue<float>();
         Debug.Log(value);
-        DetectObject();
+       // DetectObject();
     }
 
     private void TouchHold(InputAction.CallbackContext context)
