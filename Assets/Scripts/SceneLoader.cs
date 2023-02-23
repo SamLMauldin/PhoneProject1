@@ -15,4 +15,9 @@ public class SceneLoader : MonoBehaviour
         Application.Quit();
         Debug.Log("Game Quits");
     }
+    public void ReloadLevel()
+    {
+        int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(activeSceneIndex);
+    }
 }

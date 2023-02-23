@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.InputSystem;
 
 public class EnemyTurnState : State
 {
     private GameFSM _stateMachine;
     private GameController _controller;
+    private float _pauseDuration = 5;
 
     public EnemyTurnState(GameFSM stateMachine, GameController controller)
     {
@@ -17,30 +20,30 @@ public class EnemyTurnState : State
     {
         base.Enter();
         Debug.Log("EnemyTurnStarts");
+        Debug.Log("Enemy thinking...");
+        _controller.EnemyTurnHUDOn();
     }
 
     public override void Exit()
     {
+        Debug.Log("Leaving Enemy Turn");
+        _controller.EnemyTurnHUDOff();
         base.Exit();
     }
 
     public override void FixedTick()
     {
         base.FixedTick();
+        
     }
 
     public override void Tick()
     {
         base.Tick();
-    }
-
-    IEnumerator EnemyThinkingRoutine(float pauseDuration)
-    {
-        Debug.Log("Enemy thinking...");
-        yield return new WaitForSeconds(pauseDuration);
-
-        Debug.Log("Enemy performs action");
-
-        //StateMachineBehaviour.ChangeState<PlayerTurnGameState>();
+        if(StateDuration >= _pauseDuration)
+        {
+            Debug.Log("Enemy performs action");
+            _stateMachine.ChangeState(_stateMachine.PlayerTurnState);
+        }
     }
 }

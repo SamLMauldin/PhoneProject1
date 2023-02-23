@@ -22,6 +22,10 @@ public class GameSetupState : State
         Debug.Log("STATE: Game Setup");
         Debug.Log("Load Save Data");
         Debug.Log("Spawn Units");
+        _controller.EnemyTurnHUDOff();
+        _controller.PlayerTurnHUDOff();
+        _controller.WinNLoseHUDOff();
+        _controller.SwapHUDOff();
     }
 
     public override void Exit()
@@ -37,6 +41,6 @@ public class GameSetupState : State
     public override void Tick()
     {
         base.Tick();
-        _stateMachine.ChangeState(_stateMachine.EnemyTurnState);
+        _stateMachine.ChangeState(_stateMachine.SwapEnemyState);
     }
 }

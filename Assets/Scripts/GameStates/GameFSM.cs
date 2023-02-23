@@ -13,6 +13,7 @@ public class GameFSM : StateMachineMB
     public PlayerTurnState PlayerTurnState { get; private set; }
     public WinState WinState { get; private set; }
     public LoseState LoseState { get; private set; }
+    public SwapEnemyState SwapEnemyState { get; private set; }
     private void Awake()
     {
         _controller = GetComponent<GameController>();
@@ -22,10 +23,26 @@ public class GameFSM : StateMachineMB
         PlayerTurnState = new PlayerTurnState(this, _controller);
         WinState = new WinState(this, _controller);
         LoseState = new LoseState(this, _controller);
+        SwapEnemyState = new SwapEnemyState(this, _controller);
     }
 
     private void Start()
     {
         ChangeState(SetupState);
+    }
+
+    public void EnemyState()
+    {
+        ChangeState(EnemyTurnState);
+    }
+
+    public void WinTurnState()
+    {
+        ChangeState(WinState);
+    }
+
+    public void LoseTurnState()
+    {
+        ChangeState(LoseState);
     }
 }

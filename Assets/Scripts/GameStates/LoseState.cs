@@ -16,6 +16,10 @@ public class LoseState : State
     {
         base.Enter();
         Debug.Log("You Lose!");
+        _controller.WinNLoseHUDOn();
+        _controller.LoseTextOn();
+        _controller.EnemySwap();
+        _controller.AudioFeedbackLose();
     }
 
     public override void Exit()
