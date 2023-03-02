@@ -51,4 +51,16 @@ public class PlayerTurnState : State
         Debug.Log("Player Attacked Enemy");
         _stateMachine.ChangeState(_stateMachine.EnemyTurnState);
     }
+
+    public void Defend()
+    {
+        Debug.Log("Player Defended");
+        _stateMachine.ChangeState(_stateMachine.EnemyTurnState);
+    }
+
+    public void Heal()
+    {
+        Debug.Log("Player Healed");
+        _stateMachine.ChangeState(_stateMachine.EnemyTurnState);
+    }
 }

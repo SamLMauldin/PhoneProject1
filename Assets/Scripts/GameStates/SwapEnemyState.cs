@@ -44,4 +44,9 @@ public class SwapEnemyState : State
             _stateMachine.ChangeState(_stateMachine.PlayerTurnState);
         }
     }
+
+    public void EnemyAttack()
+    {
+        Debug.Log("Enemy Attacked");
+    }
 }
