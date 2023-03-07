@@ -7,6 +7,7 @@ public class SwapEnemyState : State
     private GameFSM _stateMachine;
     private GameController _controller;
     private float _pauseDuration = 2;
+    private int _nextEnemy = 0;
     public SwapEnemyState(GameFSM stateMachine, GameController controller)
     {
         //hold on to our parameters in our class variables for reuse
@@ -25,6 +26,7 @@ public class SwapEnemyState : State
     public override void Exit()
     {
         Debug.Log("Returning to Normal Gameplay");
+        _nextEnemy++;
         _controller.SwapHUDOff();
         _controller.EnemySwap();
         base.Exit();
@@ -41,6 +43,7 @@ public class SwapEnemyState : State
         if (StateDuration >= _pauseDuration)
         {
             Debug.Log("Enemy got swapped to another");
+            _controller._currentEnemy = _controller._EnemyList[_nextEnemy];
             _stateMachine.ChangeState(_stateMachine.PlayerTurnState);
         }
     }

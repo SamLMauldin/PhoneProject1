@@ -9,6 +9,7 @@ public class EnemyTurnState : State
     private GameFSM _stateMachine;
     private GameController _controller;
     private float _pauseDuration = 5;
+    public int _enemyDamage = 10;
 
     public EnemyTurnState(GameFSM stateMachine, GameController controller)
     {
@@ -43,7 +44,13 @@ public class EnemyTurnState : State
         if(StateDuration >= _pauseDuration)
         {
             Debug.Log("Enemy performs action");
+            EnemyBasicAttack();
             _stateMachine.ChangeState(_stateMachine.PlayerTurnState);
         }
+    }
+
+    public void EnemyBasicAttack()
+    {
+        _controller._player.TakeDamage(_enemyDamage);
     }
 }

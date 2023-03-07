@@ -33,16 +33,19 @@ public class GameFSM : StateMachineMB
 
     public void EnemyState()
     {
+        PlayerTurnState.Attack();
         ChangeState(EnemyTurnState);
     }
 
     public void WinTurnState()
     {
-        ChangeState(WinState);
+        PlayerTurnState.Heal();
+        ChangeState(EnemyTurnState);
     }
 
     public void LoseTurnState()
     {
-        ChangeState(LoseState);
+        PlayerTurnState.Defend();
+        ChangeState(EnemyTurnState);
     }
 }

@@ -14,7 +14,9 @@ public class GameController : MonoBehaviour
     [SerializeField] AudioClip _winSound;
     [SerializeField] AudioClip _loseSound;
 
-    [SerializeField] GameObject _tempEnemySwap;
+    [SerializeField] public GameObject _currentEnemy;
+    [SerializeField] public GameObject[] _EnemyList;
+    [SerializeField] public Health _player;
 
     private bool _check= true;
     public void PlayerTurnHUDOn()
@@ -81,11 +83,12 @@ public class GameController : MonoBehaviour
     {
         if (_check) 
         {
-            _tempEnemySwap.SetActive(false);
+            _currentEnemy.SetActive(false);
+
         }
         else
         {
-            _tempEnemySwap.SetActive(true);
+            _currentEnemy.SetActive(true);
         }
         _check = !_check;
     }
