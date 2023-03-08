@@ -11,7 +11,6 @@ public class PlayerTurnState : State
 
     public Health _enemy;
 
-    public bool _isDefend = false;
 
     public PlayerTurnState(GameFSM stateMachine, GameController controller)
     {
@@ -35,6 +34,11 @@ public class PlayerTurnState : State
     public override void Exit()
     {
         _controller.PlayerTurnHUDOff();
+        if (_enemy._currentHealth <= 0)
+        {
+            _stateMachine.ChangeState(_stateMachine.SwapEnemyState);
+            _turnsTaken = 0;
+        }
         base.Exit();
     }
 
@@ -63,9 +67,9 @@ public class PlayerTurnState : State
     public void Defend()
     {
         Debug.Log("Player Defended");
-        if (!_isDefend)
+        if (!_controller._player._playerIsDefend)
         {
-            _isDefend = true;
+            _controller._player._playerIsDefend = true;
             _stateMachine.ChangeState(_stateMachine.EnemyTurnState);
         }
     }
@@ -73,7 +77,7 @@ public class PlayerTurnState : State
     public void Heal()
     {
         Debug.Log("Player Healed");
-        _controller._player.TakeDamage(-15);
+        _controller._player.Heal(15);
         _stateMachine.ChangeState(_stateMachine.EnemyTurnState);
     }
 }

@@ -8,8 +8,9 @@ public class EnemyTurnState : State
 {
     private GameFSM _stateMachine;
     private GameController _controller;
-    private float _pauseDuration = 5;
+    private float _pauseDuration = 2.5f;
     public int _enemyDamage = 10;
+    public Health _enemy;
 
     public EnemyTurnState(GameFSM stateMachine, GameController controller)
     {
@@ -51,6 +52,15 @@ public class EnemyTurnState : State
 
     public void EnemyBasicAttack()
     {
-        _controller._player.TakeDamage(_enemyDamage);
+        if (_controller._player._playerIsDefend == true)
+        {
+            Debug.Log("Played Didn't take a lot of damage");
+            _controller._player.TakeDamage(_enemyDamage / 2);
+            _controller._player._playerIsDefend = false;
+        }
+        else
+        {
+            _controller._player.TakeDamage(_enemyDamage);
+        }
     }
 }

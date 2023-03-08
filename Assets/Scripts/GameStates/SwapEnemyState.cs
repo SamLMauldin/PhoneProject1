@@ -6,7 +6,7 @@ public class SwapEnemyState : State
 {
     private GameFSM _stateMachine;
     private GameController _controller;
-    private float _pauseDuration = 2;
+    private float _pauseDuration = 1.5f;
     private int _nextEnemy = 0;
     public SwapEnemyState(GameFSM stateMachine, GameController controller)
     {
@@ -17,9 +17,16 @@ public class SwapEnemyState : State
 
     public override void Enter()
     {
-        Debug.Log("Swapping Enemy");
-        _controller.SwapHUDOn();
-        _controller.EnemySwap();
+        if (_nextEnemy == _controller._EnemyList.Length)
+        {
+            _stateMachine.ChangeState(_stateMachine.WinState);
+        }
+        else
+        {
+            Debug.Log("Swapping Enemy");
+            _controller.SwapHUDOn();
+            _controller.EnemySwap();
+        }
         base.Enter();
     }
 

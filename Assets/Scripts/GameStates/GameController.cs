@@ -18,7 +18,10 @@ public class GameController : MonoBehaviour
     [SerializeField] public GameObject[] _EnemyList;
     [SerializeField] public Health _player;
 
+    [SerializeField] public ParticleSystem _playerAttackParticles;
+
     private bool _check= true;
+
     public void PlayerTurnHUDOn()
     {
         _playerHud.SetActive(true);
@@ -73,7 +76,7 @@ public class GameController : MonoBehaviour
     public void AudioFeedbackLose()
     {
         //audio. TODO - consider Object Pooling for performance
-        if (_winSound != null)
+        if (_loseSound != null)
         {
             AudioHelper.PlayClip2D(_loseSound, 1f);
         }
