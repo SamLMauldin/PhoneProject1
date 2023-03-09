@@ -22,10 +22,7 @@ public class PlayerTurnState : State
     {
         Debug.Log("Entering Player Turn");
         _controller.PlayerTurnHUDOn();
-        if(_turnsTaken == 0)
-        {
-            _enemy = _controller._currentEnemy.GetComponent<Health>();
-        }
+        _enemy = _controller._currentEnemy.GetComponent<Health>();
         _turnsTaken++;
         Debug.Log("Turns Taken: " + _turnsTaken);
         base.Enter();
@@ -55,6 +52,10 @@ public class PlayerTurnState : State
             _stateMachine.ChangeState(_stateMachine.SwapEnemyState);
             _turnsTaken = 0;
         }
+        if(_controller._player._currentHealth <= 0)
+        {
+            _stateMachine.ChangeState(_stateMachine.LoseState);
+        }
     }
 
     public void Attack()
@@ -70,14 +71,17 @@ public class PlayerTurnState : State
         if (!_controller._player._playerIsDefend)
         {
             _controller._player._playerIsDefend = true;
+            _controller.AudioFeedbackDefend();
             _stateMachine.ChangeState(_stateMachine.EnemyTurnState);
         }
     }
 
     public void Heal()
     {
-        Debug.Log("Player Healed");
-        _controller._player.Heal(15);
-        _stateMachine.ChangeState(_stateMachine.EnemyTurnState);
+        _controller._player.Heal(60);
+        if ((_controller._player._currentHealth + 45) !<= _controller._player._maxHealth)
+        {
+            Debug.Log("Player Healed");
+        }
     }
 }

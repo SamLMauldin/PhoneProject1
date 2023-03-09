@@ -12,6 +12,8 @@ public class Health : MonoBehaviour, IDamageable
     [SerializeField] HealthBar _healthBar;
 
     [SerializeField] AudioClip _damagedSFX;
+    [SerializeField] AudioClip _healedSFX;
+    [SerializeField] AudioClip _youCantDoThatSFX;
 
     [SerializeField] Camera _gameCamera = null;
     [SerializeField] Vector3 _originalPosOfCam;
@@ -50,18 +52,37 @@ public class Health : MonoBehaviour, IDamageable
             _damageTaken = true;
         }
         FeedBackDamaged();
+        if(_healthBar != null)
+        {
+            _healthBar.SetHealth(_currentHealth);
+        }
         Debug.Log("Took: " + damage);
     }
 
     public void Heal(int damage)
     {
-        _currentHealth += damage;
-        if(_healPanel != null)
+        if(_currentHealth < _maxHealth)
         {
-            StartCoroutine(HealPanel());
+            _currentHealth += damage;
+            if (_currentHealth > _maxHealth)
+            {
+                _currentHealth = _maxHealth;
+            }
+            if (_healPanel != null)
+            {
+                StartCoroutine(HealPanel());
+            }
+            if (_healthBar != null)
+            {
+                _healthBar.SetHealth(_currentHealth);
+            }
+            FeedBackHeal();
+            Debug.Log("Healed: " + damage);
         }
-        Debug.Log("Healed: " + damage);
-
+        else
+        {
+            FeedBackYouCantDoThat();
+        }
     }
 
     void Update()
@@ -116,6 +137,26 @@ public class Health : MonoBehaviour, IDamageable
         if(_damageParticles != null)
         {
             _damageParticles = Instantiate(_damageParticles, transform.position, Quaternion.identity);
+        }
+        if(_damagedSFX != null)
+        {
+            AudioHelper.PlayClip2D(_damagedSFX, 1f);
+        }
+    }
+
+    private void FeedBackHeal()
+    {
+        if(_healedSFX != null)
+        {
+            AudioHelper.PlayClip2D(_healedSFX, 1f);
+        }
+    }
+
+    private void FeedBackYouCantDoThat()
+    {
+        if(_youCantDoThatSFX != null)
+        {
+            AudioHelper.PlayClip2D(_youCantDoThatSFX, 1f);
         }
     }
 }

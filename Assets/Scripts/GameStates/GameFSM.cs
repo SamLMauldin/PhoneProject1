@@ -7,6 +7,7 @@ public class GameFSM : StateMachineMB
 {
     private GameController _controller;
 
+
     //state variables here
     public GameSetupState SetupState { get; private set; }
     public EnemyTurnState EnemyTurnState { get; private set; }
@@ -39,8 +40,11 @@ public class GameFSM : StateMachineMB
 
     public void WinTurnState()
     {
+        if (_controller._player._currentHealth != _controller._player._maxHealth)
+        {
+            ChangeState(EnemyTurnState);
+        }
         PlayerTurnState.Heal();
-        ChangeState(EnemyTurnState);
     }
 
     public void LoseTurnState()

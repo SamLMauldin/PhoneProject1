@@ -17,16 +17,9 @@ public class SwapEnemyState : State
 
     public override void Enter()
     {
-        if (_nextEnemy == _controller._EnemyList.Length)
-        {
-            _stateMachine.ChangeState(_stateMachine.WinState);
-        }
-        else
-        {
-            Debug.Log("Swapping Enemy");
-            _controller.SwapHUDOn();
-            _controller.EnemySwap();
-        }
+        Debug.Log("Swapping Enemy");
+        _controller.SwapHUDOn();
+        _controller.EnemySwap();
         base.Enter();
     }
 
@@ -34,6 +27,8 @@ public class SwapEnemyState : State
     {
         Debug.Log("Returning to Normal Gameplay");
         _nextEnemy++;
+        Debug.Log(_nextEnemy);
+        Debug.Log(_controller._EnemyList.Length);
         _controller.SwapHUDOff();
         _controller.EnemySwap();
         base.Exit();
@@ -46,11 +41,16 @@ public class SwapEnemyState : State
 
     public override void Tick()
     {
+        if(_nextEnemy == _controller._EnemyList.Length)
+            {
+            _stateMachine.ChangeState(_stateMachine.WinState);
+        }
         base.Tick();
         if (StateDuration >= _pauseDuration)
         {
             Debug.Log("Enemy got swapped to another");
             _controller._currentEnemy = _controller._EnemyList[_nextEnemy];
+            _controller._EnemyHPList[_nextEnemy].SetActive(true);
             _stateMachine.ChangeState(_stateMachine.PlayerTurnState);
         }
     }

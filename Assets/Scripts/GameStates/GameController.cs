@@ -10,18 +10,21 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject _swapHud;
     [SerializeField] GameObject _winTxt;
     [SerializeField] GameObject _loseTxt;
+    [SerializeField] GameObject _permHUD;
 
     [SerializeField] AudioClip _winSound;
     [SerializeField] AudioClip _loseSound;
+    [SerializeField] AudioClip _defendSound;
 
     [SerializeField] public GameObject _currentEnemy;
     [SerializeField] public GameObject[] _EnemyList;
+    [SerializeField] public GameObject[] _EnemyHPList;
     [SerializeField] public Health _player;
 
     [SerializeField] public ParticleSystem _playerAttackParticles;
 
     private bool _check= true;
-
+    public int _enemyNum = 0;
     public void PlayerTurnHUDOn()
     {
         _playerHud.SetActive(true);
@@ -58,10 +61,12 @@ public class GameController : MonoBehaviour
     public void WinTextOn()
     {
         _winTxt.SetActive(true);
+        _permHUD.SetActive(false);
     }
     public void LoseTextOn()
     {
         _loseTxt.SetActive(true);
+        _permHUD.SetActive(false);
     }
 
     public void AudioFeedbackWin()
@@ -82,16 +87,24 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void AudioFeedbackDefend()
+    {
+        if(_defendSound != null)
+        {
+            AudioHelper.PlayClip2D(_defendSound, 1f);
+        }
+    }
+
     public void EnemySwap()
     {
         if (_check) 
         {
             _currentEnemy.SetActive(false);
-
         }
         else
         {
             _currentEnemy.SetActive(true);
+            _enemyNum++;
         }
         _check = !_check;
     }
